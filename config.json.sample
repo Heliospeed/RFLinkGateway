@@ -6,6 +6,7 @@
   "mqtt_message_timeout": 60,
   "mqtt_user":"your_mqtt_user",
   "mqtt_password":"your_mqtt_password",
+  "mqtt_replace_spaces": true,
   "rflink_tty_device": "/dev/ttyUSB0",
   "rflink_direct_output_params": [
     "BAT",

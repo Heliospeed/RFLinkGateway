@@ -84,6 +84,10 @@ class MQTTClient(multiprocessing.Process):
 
     def publish(self, task) -> None:
         topic = "%s/%s" % (self.config['mqtt_prefix'], task['topic'])
+
+        if self.config.get('mqtt_replace_spaces', False):
+            topic = topic.replace(" ", "_")
+
         if self.mqttDataFormat == 'json':
             if is_number(task['payload']):
                 task['payload'] = '{"value": ' + str(task['payload']) + '}'
