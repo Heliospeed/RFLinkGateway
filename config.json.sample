@@ -25,5 +25,9 @@
   ],
   "rflink_wdir_output_params": [
     "WINDIR"
+  ],
+  "rflink_ignored_devices": [
+      "Friedland", 
+      "Alecto v1/FE07"
   ]
 }
