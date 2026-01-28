@@ -7,6 +7,7 @@
   "mqtt_user":"your_mqtt_user",
   "mqtt_password":"your_mqtt_password",
   "mqtt_replace_spaces": true,
+  "log_level": "DEBUG",
   "rflink_tty_device": "/dev/ttyUSB0",
   "rflink_direct_output_params": [
     "BAT",

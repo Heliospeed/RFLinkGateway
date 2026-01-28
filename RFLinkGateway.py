@@ -13,16 +13,9 @@ import MQTTClient
 import SerialProcess
 
 logger = logging.getLogger('RFLinkGW')
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s')
-logger.setLevel(logging.DEBUG)
-
-ch = logging.StreamHandler()
-ch.setFormatter(formatter)
-ch.setLevel(logging.DEBUG)
-logger.addHandler(ch)
 
 def load_config():
-    # load config.json and overrides with environment variables
+    # load config.json and overrides with environnment variables
     config = {}
 
     try:
@@ -39,25 +32,39 @@ def load_config():
         if key_lower in env:
             raw_value = env[key_lower]
 
-            # Tentative de parsing JSON (list, dict, bool, int…)
+            # parsing JSON (list, dict, bool, int…)
             try:
                 value = json.loads(raw_value)
             except Exception:
                 value = raw_value
 
-            logger.info(
-                "Config override: %s = %s (env)",
-                key,
-                value
-            )
+            logger.info("Config override: %s = %s (env)", key, value)
             config[key] = value
 
     return config
 
+def setup_logger(config):
+    level_str = config.get("log_level", "DEBUG").upper()
+    level = getattr(logging, level_str, logging.DEBUG)
+
+    logger.setLevel(level)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s')
+
+    ch = logging.StreamHandler()
+    ch.setFormatter(formatter)
+    ch.setLevel(level)
+
+    # remove previous handlers to avoid duplicates (if reload)
+    if logger.hasHandlers():
+        logger.handlers.clear()
+    logger.addHandler(ch)
+
 def main():
     # load configuration
     config = load_config()
-
+    setup_logger(config)
+    logger.info("Starting RFLinkGateway with log_level=%s", config.get("log_level"))
+    
     # messages read from device
     messageQ = multiprocessing.Queue()
     # messages written to device
