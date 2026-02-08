@@ -53,6 +53,11 @@ Whole configuration is located in config.json file. You can copy and edit `confi
   "mqtt_message_timeout": 60,
   "mqtt_user":"your_mqtt_user",
   "mqtt_password":"your_mqtt_password",
+  "mqtt_tls": false,
+  "mqtt_reject_unauthorized": false,
+  "mqtt_ca": "",
+  "mqtt_cert": "",
+  "mqtt_key": "",
   "mqtt_replace_spaces": true,
   "log_level": "DEBUG",
   "rflink_tty_device": "/dev/ttyUSB0",
@@ -87,6 +92,11 @@ config param  | meaning
  mqtt_port    | MQTT broker port|
  mqtt_prefix  | prefix for publish and subscribe topic|
  mqtt_format  | publish and subscribe topic as `json` or `ascii` |
+ mqtt_tls | enable MQTT over TLS (mqtts) (`true` / `false`, default: `false`) |
+ mqtt_ca | path to CA certificate file used to validate MQTT broker |
+ mqtt_cert | path to client certificate file for mutual TLS authentication (optional) |
+ mqtt_key | path to client private key file for mutual TLS authentication (optional) |
+ mqtt_reject_unauthorized | reject invalid or untrusted server certificates (`true` = strict validation, default: `false`) |
  mqtt_replace_spaces | replace spaces in MQTT topics with `_` (`true` to enable, default: `false`) |
  log_level | Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`, default: `DEBUG`) |
  rflink_tty_device | Serial device |
